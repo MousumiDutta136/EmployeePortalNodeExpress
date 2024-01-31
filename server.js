@@ -1,4 +1,5 @@
 const express = require("express");
+const { customError } = require("./middleware/customError");
 const app = express();
 const dotenv = require("dotenv").config();
 const port = process.env.PORT || 8080;
@@ -10,7 +11,9 @@ const port = process.env.PORT || 8080;
   res.status(200).json({"message":"Get all employees"});
 
 })*/
+app.use(express.json());
 app.use("/api/employees", require("./routes/employeeRoutes"));
+app.use(customError);
 
 app.listen(port, ()=>{
   console.log(`express server running on port ${port}`)

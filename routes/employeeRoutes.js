@@ -1,20 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const {getEmployee, createEmployee, updateEmployee} = require("../controllers/employeeController");
+const {getEmployee, getEmployees, createEmployee, updateEmployee} = require("../controllers/employeeController");
 //get all emplotyees
-router.route("/").get(getEmployee);
+router.route("/").get(getEmployees);
 //post
 router.route("/").post(createEmployee);
 //get one employee by id
-router.route("/:id").get(updateEmployee);
+router.route("/:id").get(getEmployee);
 //put
-router.route("/:id").put((req,res) => { 
-  res.status(200).json({message:`Update employee for id  ${req.params.id}`});  
-})
+router.route("/:id").put(updateEmployee)
 //delete
-router.route("/:id").delete((req,res) => { 
-  res.status(200).json({message:`delete employee for id  ${req.params.id}`});  
-})
+router.route("/:id").delete()
 
 module.exports = router;
