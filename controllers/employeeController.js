@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const employee = require("../models/employee")
 // get all employees
 //route: GET /api/employees
 //accessibility: public

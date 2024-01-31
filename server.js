@@ -1,7 +1,9 @@
 const express = require("express");
 const { customError } = require("./middleware/customError");
+const { dbConnection } = require("./config/connection")
 const app = express();
 const dotenv = require("dotenv").config();
+dbConnection();
 const port = process.env.PORT || 8080;
 
 //get request
