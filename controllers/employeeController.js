@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
-const employee = require("../models/employee")
+const employeeModel = require("../models/employee")
 // get all employees
 //route: GET /api/employees
 //accessibility: public
 
 const getEmployees = asyncHandler(async (req,res) => { 
-  res.status(200).json({message:"Get all employees"});
-  
+  const employees = await employeeModel.find();
+  //res.status(200).json({message:"Get all employees"});
+  res.status(200).json(employees);
 });
 
 //get an employee by id
@@ -26,7 +27,12 @@ const createEmployee = asyncHandler(async (req,res) => {
     res.status(400);
     throw new Error("All fields are required!");
   }
-  res.status(201).json({message:"Create an employee"});  
+  const newEmployee = await employeeModel.create({
+    name,
+    email
+  })
+  //res.status(201).json({message:"Create an employee"});  
+  res.status(201).json(newEmployee); 
 });
 
 //update an employee by id

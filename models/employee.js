@@ -10,4 +10,4 @@ const employeeSchema = mongoose.Schema({
   }
 })
 
-module.exports = mongoose.Schema("Employee",employeeSchema)
+module.exports = mongoose.model("Employee",employeeSchema)
