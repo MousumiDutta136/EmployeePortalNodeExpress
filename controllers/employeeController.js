@@ -14,7 +14,13 @@ const getEmployees = asyncHandler(async (req,res) => {
 //route: GET /api/employees/:id
 //accessibility: public
 const getEmployee = asyncHandler(async (req,res) => { 
-  res.status(200).json({message:`get employee for id  ${req.params.id}`});  
+  const employee = await employeeModel.findById(req.params.id);
+  if(!employee){
+    res.status(404);
+    throw new  Error("empoloyee not found.")
+  }
+  //res.status(200).json({message:`get employee for id  ${req.params.id}`}); 
+  res.status(200).json(employee); 
 });
 
 // create an employee
@@ -39,14 +45,39 @@ const createEmployee = asyncHandler(async (req,res) => {
 //route: PUT /api/employees/:id
 //accessibility: public
 const updateEmployee = asyncHandler(async (req,res) => { 
-  res.status(200).json({message:`Update employee for id  ${req.params.id}`});  
+  //get the employee by id whose details needs to be updated
+  const employee = await employeeModel.findById(req.params.id);
+  if(!employee){
+    res.status(404);
+    throw new  Error("empoloyee not found.")
+  }
+  //method is called to update the selected employee
+  const updatedEmployee = await employeeModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+  {
+    new:true
+  }
+  );
+  //res.status(200).json({message:`Update employee for id  ${req.params.id}`});  
+  res.status(200).json(updatedEmployee);  
 });
 
 //delete an employee by id
 //route: DELETE /api/employees/:id
 //accessibility: public
-const deleteEmployee = asyncHandler(async (req,res) => { 
-  res.status(200).json({message:`delete employee for id  ${req.params.id}`});  
+const deleteEmployee = asyncHandler(async (req, res) => {
+  //get the employee by id whose details needs to be deleted
+  const employee = await employeeModel.findById(req.params.id);
+  //console.log(employee);
+  if(!employee){
+    res.status(404);
+    throw new  Error("empoloyee not found.")
+  }
+  
+  await employeeModel.deleteOne();
+  //res.status(200).json({message:`delete employee for id  ${req.params.id}`});  
+  res.status(200).json(employee);
 });
 
 
